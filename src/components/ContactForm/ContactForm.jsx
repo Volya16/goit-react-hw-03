@@ -15,14 +15,24 @@ const newUserSchema = Yup.object().shape({
     .required("This field is required"),
 });
 
-const initialNewUser = { name: "", number: "" };
+const initialNewContact = { name: "", number: "" };
 
-export default function ContactForm() {
+export default function ContactForm({ onAdd }) {
   const nameId = nanoid();
   const numberId = nanoid();
 
+  const handleSubmit = (data, actions) => {
+    const newContact = { id: nanoid(), ...data };
+    onAdd(newContact);
+    actions.resetForm();
+  };
+
   return (
-    <Formik initialValues={initialNewUser} validationSchema={newUserSchema}>
+    <Formik
+      initialValues={initialNewContact}
+      validationSchema={newUserSchema}
+      onSubmit={handleSubmit}
+    >
       <Form className={style.form}>
         <div className={style.fieldWrapper}>
           <label className={style.label} htmlFor="nameId">
@@ -34,7 +44,7 @@ export default function ContactForm() {
             name="name"
             id="nameId"
           ></Field>
-          <ErrorMessage name="name" component="span" />
+          <ErrorMessage className={style.error} name="name" component="span" />
         </div>
         <div className={style.fieldWrapper}>
           <label className={style.label} htmlFor="numberId">
@@ -46,7 +56,11 @@ export default function ContactForm() {
             name="number"
             id="numberId"
           ></Field>
-          <ErrorMessage name="number" component="span" />
+          <ErrorMessage
+            className={style.error}
+            name="number"
+            component="span"
+          />
         </div>
         <button className={style.button} type="submit">
           Add contact
@@ -55,3 +69,5 @@ export default function ContactForm() {
     </Formik>
   );
 }
+
+// export default function ContactForm(onAdd)

@@ -20,6 +20,11 @@
   font-weight: 500;
 }
 
+.error {
+  color: red;
+  font-size: 12px;
+}
+
 .button {
   width: max-content;
   padding: 8px 16px;
