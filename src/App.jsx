@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+
 import "./App.css";
 
 import initialContacts from "./data/contacts.json";
@@ -11,7 +10,7 @@ import ContactList from "./components/ContactList/ContactList";
 
 export default function App() {
   const [contacts, setContacts] = useState(
-    () => JSON.parse(localStorage.getItem("contacts")) || contacts
+    () => JSON.parse(localStorage.getItem("contacts")) || initialContacts
   );
   const [filter, setFilter] = useState("");
 
@@ -20,7 +19,6 @@ export default function App() {
   }, [contacts]);
 
   const addContact = (data) => {
-    console.log(data);
     setContacts((contacts) => [...contacts, data]);
   };
 
